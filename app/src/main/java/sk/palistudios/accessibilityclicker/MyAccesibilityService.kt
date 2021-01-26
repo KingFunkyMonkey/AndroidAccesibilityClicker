@@ -7,24 +7,23 @@ import android.view.accessibility.AccessibilityEvent
 
 
 
-class MyAccesibilityService : AccessibilityService {
-    constructor() : super()
+class MyAccesibilityService() : AccessibilityService() {
 
     override fun onAccessibilityEvent(event: AccessibilityEvent) {
         Log.d("accesibilityService", event.toString())
         when (event.eventType) {
             AccessibilityEvent.TYPE_GESTURE_DETECTION_START -> {
-                Log.d("accesibilityService",A11yNodeInfo.wrap(getRootInActiveWindow()).toViewHeirarchy())
+                Log.d("accesibilityService",NodeInfo.wrap(getRootInActiveWindow())!!.toViewHeirarchy())
                 run {
                     //If the event has a source, let's print it out separately.
                     if (event.source != null) {
-                        Log.d("accesibilityService", A11yNodeInfo.wrap(event.source).toViewHeirarchy())
+                        Log.d("accesibilityService", NodeInfo.wrap(event.source)!!.toViewHeirarchy())
                     }
                 }
             }
             else -> {
                 if (event.source != null) {
-                    Log.d("accesibilityService", A11yNodeInfo.wrap(event.source).toViewHeirarchy())
+                    Log.d("accesibilityService", NodeInfo.wrap(event.source)!!.toViewHeirarchy())
                 }
             }
         }
