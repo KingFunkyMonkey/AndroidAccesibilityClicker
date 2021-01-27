@@ -20,7 +20,7 @@
       </intent-filter>
     </activity>
     <service
-        android:name="com.moba11y.basicaccessibilityservice.BasicAccessibilityService"
+        android:name=".MyAccesibilityService"
         android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE" >
 
       <intent-filter>
