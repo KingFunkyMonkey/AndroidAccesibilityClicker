@@ -3,9 +3,7 @@ package sk.palistudios.accessibilityclicker
 import android.accessibilityservice.AccessibilityService
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
-
-
-
+import android.widget.Toast
 
 class MyAccesibilityService() : AccessibilityService() {
 
@@ -20,6 +18,10 @@ class MyAccesibilityService() : AccessibilityService() {
                         Log.d("accesibilityService", NodeInfo.wrap(event.source)!!.toViewHeirarchy())
                     }
                 }
+            }
+            AccessibilityEvent.TYPE_VIEW_CLICKED -> {
+                Toast.makeText(applicationContext, "heya, clicked", Toast.LENGTH_LONG).show()
+
             }
             else -> {
                 if (event.source != null) {
