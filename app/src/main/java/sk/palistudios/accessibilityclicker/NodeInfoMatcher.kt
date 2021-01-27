@@ -1,15 +1,13 @@
 package sk.palistudios.accessibilityclicker
 
 import android.graphics.Rect
-import android.support.v4.view.ViewPager
-import android.support.v4.view.accessibility.AccessibilityNodeInfoCompat
 import android.view.View
 
 
 /**
  * Created by chrismcmeeking on 2/25/17.
  */
-class NodeInfoMatcher  {
+class NodeInfoMatcher {
 
     private var mContentDescription: String? = null
     private var mText: String? = null
@@ -52,8 +50,9 @@ class NodeInfoMatcher  {
         return this
     }
 
-    fun match(nodeInfo: NodeInfo): Boolean {
-        val position: Rect = nodeInfo.getBoundsInScreen()
+    fun match(nodeInfo: NodeInfo?): Boolean {
+        if (nodeInfo == null) return false
+        val position: Rect = nodeInfo.boundsInScreen
         if (mContainedIn != null) {
             if (position.top < mContainedIn!!.top) return false
             if (position.left < mContainedIn!!.left) return false
@@ -67,11 +66,11 @@ class NodeInfoMatcher  {
             if (position.right != mPositionEqual!!.right) return false
         }
         if (mContentDescription != null &&
-            (nodeInfo.getContentDescription() == null
-                    || !mContentDescription!!.contentEquals(nodeInfo.getContentDescription()))
-        ) return false
-        if (mText != null && (nodeInfo.getText() == null || !mText!!.contentEquals(nodeInfo.getText()))) return false
-        if (mClass != null && !mClass!!.name.contentEquals(nodeInfo.getClassName())) return false
-        return if (!nodeInfo.getViewIdResourceName().contains(mViewIdResourceName)) false else true
+            (nodeInfo.contentDescription == null
+                    || !mContentDescription!!.contentEquals(nodeInfo!!.contentDescription!!)
+                    )) return false
+        if (mText != null && (nodeInfo.text == null || !mText!!.contentEquals(nodeInfo!!.text!!))) return false
+        if (mClass != null && !mClass!!.name.contentEquals(nodeInfo.className)) return false
+        return if (!nodeInfo.viewIdResourceName.contains(mViewIdResourceName)) false else true
     }
 }

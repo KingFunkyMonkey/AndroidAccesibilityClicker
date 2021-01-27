@@ -1,10 +1,7 @@
 package sk.palistudios.accessibilityclicker
 
-
 import android.graphics.Rect
 import android.os.Build
-import android.support.v4.view.ViewPager
-import android.support.v4.view.accessibility.AccessibilityNodeInfoCompat
 import android.view.View
 import android.view.accessibility.AccessibilityNodeInfo
 import android.widget.Button
@@ -12,9 +9,9 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Switch
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat.AccessibilityActionCompat.*
 import androidx.viewpager.widget.ViewPager
 import java.util.*
-
 
 /**
  * Created by chrismcmeeking on 2/25/17.
@@ -81,7 +78,7 @@ class NodeInfo : Iterable<NodeInfo?>,
 
     override fun compare(p0: NodeInfo?, p1: NodeInfo?): Int {
         val result: Int
-        result = p0?.speakableText?.compareTo(p1?.speakableText?:"")?: return -1
+        result = p0?.speakableText?.compareTo(p1?.speakableText ?: "") ?: return -1
         if (result != 0) return result
         val lhsRect = p0?.boundsInScreen
         val rhsRect = p1?.boundsInScreen
@@ -117,12 +114,12 @@ class NodeInfo : Iterable<NodeInfo?>,
                 if (className.equals(clazz.name, ignoreCase = true)) return true
             }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                if (actionList.contains(AccessibilityNodeInfo.AccessibilityAction.ACTION_CLICK)) return true
+                if (actionList.contains(ACTION_CLICK)) return true
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (actionList.contains(AccessibilityNodeInfo.AccessibilityAction.ACTION_CONTEXT_CLICK)) return true
+                    if (actionList.contains(ACTION_CONTEXT_CLICK)) return true
                 }
-                if (actionList.contains(AccessibilityNodeInfo.AccessibilityAction.ACTION_LONG_CLICK)) return true
-                if (actionList.contains(AccessibilityNodeInfo.AccessibilityAction.ACTION_SELECT)) return true
+                if (actionList.contains(ACTION_LONG_CLICK)) return true
+                if (actionList.contains(ACTION_SELECT)) return true
             }
             val actions = actions
             return actions and AccessibilityNodeInfo.ACTION_CLICK != 0 || actions and AccessibilityNodeInfo.ACTION_LONG_CLICK != 0 || actions and AccessibilityNodeInfo.ACTION_SELECT != 0
